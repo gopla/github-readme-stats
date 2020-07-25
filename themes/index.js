@@ -1,3 +1,38 @@
+let arrThemes = [
+  "default_repocard",
+  "radical",
+  "merco",
+  "gruvbox",
+  "tokyonight",
+  "onedark",
+  "cobalt",
+  "syntwave",
+  "dracula",
+  "monokai",
+  "prussian",
+  "vue",
+];
+
+function randomizeTheme() {
+  const randomTheme = arrThemes[Math.floor(Math.random() * arrThemes.length)];
+  return randomTheme;
+}
+
+function deepFind(obj, path) {
+  var paths = path.split("."),
+    current = obj,
+    i;
+
+  for (i = 0; i < paths.length; ++i) {
+    if (current[paths[i]] == undefined) {
+      return undefined;
+    } else {
+      current = current[paths[i]];
+    }
+  }
+  return current;
+}
+
 const themes = {
   default: {
     title_color: "2f80ed",
@@ -88,6 +123,15 @@ const themes = {
     icon_color: "41b883",
     text_color: "273849",
     bg_color: "FFFEFE",
+  },
+  get random() {
+    let randThem = randomizeTheme();
+    Object.keys(themes).forEach((key) => {
+      if (randThem == key) {
+        randThem = deepFind(themes, randThem);
+      }
+    });
+    return randThem;
   },
 };
 

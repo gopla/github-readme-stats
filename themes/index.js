@@ -1,12 +1,12 @@
 let arrThemes = [
   "default_repocard",
   "radical",
-  "merco",
+  "merko",
   "gruvbox",
   "tokyonight",
   "onedark",
   "cobalt",
-  "syntwave",
+  "synthwave",
   "dracula",
   "monokai",
   "prussian",
@@ -15,6 +15,7 @@ let arrThemes = [
 
 function randomizeTheme() {
   const randomTheme = arrThemes[Math.floor(Math.random() * arrThemes.length)];
+  console.log(randomTheme);
   return randomTheme;
 }
 
@@ -24,7 +25,7 @@ function deepFind(obj, path) {
     i;
 
   for (i = 0; i < paths.length; ++i) {
-    if (current[paths[i]] == undefined) {
+    if (current[paths[i]] === undefined) {
       return undefined;
     } else {
       current = current[paths[i]];
@@ -127,7 +128,7 @@ const themes = {
   get random() {
     let randThem = randomizeTheme();
     Object.keys(themes).forEach((key) => {
-      if (randThem == key) {
+      if (randThem === key) {
         randThem = deepFind(themes, randThem);
       }
     });

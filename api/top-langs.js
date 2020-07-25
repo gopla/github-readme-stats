@@ -1,37 +1,32 @@
 require("dotenv").config();
 const {
   renderError,
+  clampValue,
   parseBoolean,
   parseArray,
-  clampValue,
   CONSTANTS,
 } = require("../src/utils");
-const fetchStats = require("../src/fetchStats");
-const renderStatsCard = require("../src/renderStatsCard");
+const fetchTopLanguages = require("../src/fetchTopLanguages");
+const renderTopLanguages = require("../src/renderTopLanguages");
 
 module.exports = async (req, res) => {
   const {
     username,
     hide,
     hide_title,
-    hide_border,
-    hide_rank,
-    show_icons,
-    count_private,
-    line_height,
+    card_width,
     title_color,
-    icon_color,
     text_color,
     bg_color,
     theme,
     cache_seconds,
   } = req.query;
-  let stats;
+  let topLangs;
 
   res.setHeader("Content-Type", "image/svg+xml");
 
   try {
-    stats = await fetchStats(username, parseBoolean(count_private));
+    topLangs = await fetchTopLanguages(username);
   } catch (err) {
     return res.send(renderError(err.message));
   }
@@ -45,15 +40,12 @@ module.exports = async (req, res) => {
   res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
 
   res.send(
-    renderStatsCard(stats, {
-      hide: parseArray(hide),
-      show_icons: parseBoolean(show_icons),
+    renderTopLanguages(topLangs, {
+      theme,
       hide_title: parseBoolean(hide_title),
-      hide_border: parseBoolean(hide_border),
-      hide_rank: parseBoolean(hide_rank),
-      line_height,
+      card_width: parseInt(card_width, 10),
+      hide: parseArray(hide),
       title_color,
-      icon_color,
       text_color,
       bg_color,
       theme,

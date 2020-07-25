@@ -1,7 +1,5 @@
 let arrThemes = [
-  "default",
   "default_repocard",
-  "dark",
   "radical",
   "merco",
   "gruvbox",
@@ -9,9 +7,10 @@ let arrThemes = [
   "onedark",
   "cobalt",
   "syntwave",
-  "highcontrast",
   "dracula",
   "monokai",
+  "prussian",
+  "vue",
 ];
 
 function randomizeTheme() {
@@ -107,11 +106,23 @@ const themes = {
     text_color: "f8f8f2",
     bg_color: "282a36",
   },
+  prussian: {
+    title_color: "bddfff",
+    icon_color: "38a0ff",
+    text_color: "6e93b5",
+    bg_color: "172f45",
+  },
   monokai: {
     title_color: "eb1f6a",
     icon_color: "e28905",
     text_color: "f1f1eb",
     bg_color: "272822",
+  },
+  vue: {
+    title_color: "41b883",
+    icon_color: "41b883",
+    text_color: "273849",
+    bg_color: "FFFEFE",
   },
   get random() {
     let randThem = randomizeTheme();

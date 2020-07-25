@@ -55,7 +55,7 @@ describe("Test renderStatsCard", () => {
 
   it("should hide individual stats", () => {
     document.body.innerHTML = renderStatsCard(stats, {
-      hide: "['issues', 'prs', 'contribs']",
+      hide: ["issues", "prs", "contribs"],
     });
 
     expect(
@@ -71,8 +71,16 @@ describe("Test renderStatsCard", () => {
 
   it("should hide_border", () => {
     document.body.innerHTML = renderStatsCard(stats, { hide_border: true });
+    expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+      "stroke-opacity",
+      "0"
+    );
 
-    expect(queryByTestId(document.body, "card-bg")).not.toBeInTheDocument();
+    document.body.innerHTML = renderStatsCard(stats, { hide_border: false });
+    expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+      "stroke-opacity",
+      "1"
+    );
   });
 
   it("should hide_rank", () => {
@@ -146,6 +154,29 @@ describe("Test renderStatsCard", () => {
       "fill",
       `#${themes.radical.bg_color}`
     );
+  });
+
+  it("should render with all the themes", () => {
+    Object.keys(themes).forEach((name) => {
+      document.body.innerHTML = renderStatsCard(stats, {
+        theme: name,
+      });
+
+      const styleTag = document.querySelector("style");
+      const stylesObject = cssToObject(styleTag.innerHTML);
+
+      const headerClassStyles = stylesObject[".header"];
+      const statClassStyles = stylesObject[".stat"];
+      const iconClassStyles = stylesObject[".icon"];
+
+      expect(headerClassStyles.fill).toBe(`#${themes[name].title_color}`);
+      expect(statClassStyles.fill).toBe(`#${themes[name].text_color}`);
+      expect(iconClassStyles.fill).toBe(`#${themes[name].icon_color}`);
+      expect(queryByTestId(document.body, "card-bg")).toHaveAttribute(
+        "fill",
+        `#${themes[name].bg_color}`
+      );
+    });
   });
 
   it("should render custom colors with themes and fallback to default colors if invalid", () => {

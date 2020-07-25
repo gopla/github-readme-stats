@@ -1,5 +1,5 @@
 <p align="center">
- <img width="100px" src="https://res.cloudinary.com/anuraghazra/image/upload/v1594908242/logo_ccswme.svg" align="center" alt="Github Readme Stats" /> 
+ <img width="100px" src="https://res.cloudinary.com/anuraghazra/image/upload/v1594908242/logo_ccswme.svg" align="center" alt="Github Readme Stats" />
  <h2 align="center">GitHub Readme Stats</h2>
  <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
 </p>
@@ -7,6 +7,9 @@
   <p align="center">
     <a href="https://github.com/anuraghazra/github-readme-stats/actions">
       <img alt="Tests Passing" src="https://github.com/anuraghazra/github-readme-stats/workflows/Test/badge.svg" />
+    </a>
+    <a href="https://codecov.io/gh/anuraghazra/github-readme-stats">
+      <img src="https://codecov.io/gh/anuraghazra/github-readme-stats/branch/master/graph/badge.svg" />
     </a>
     <a href="https://github.com/anuraghazra/github-readme-stats/issues">
       <img alt="Issues" src="https://img.shields.io/github/issues/anuraghazra/github-readme-stats?color=0088ff" />
@@ -19,9 +22,9 @@
   <p align="center">
     <a href="#demo">View Demo</a>
     ·
-    <a href="https://github.com/anuraghazra/github-readme-stats/issues">Report Bug</a>
+    <a href="https://github.com/anuraghazra/github-readme-stats/issues/new/choose">Report Bug</a>
     ·
-    <a href="https://github.com/anuraghazra/github-readme-stats/issues">Request Feature</a>
+    <a href="https://github.com/anuraghazra/github-readme-stats/issues/new/choose">Request Feature</a>
   </p>
   <p align="center">
     <a href="readme_cn.md">简体中文</a>
@@ -35,6 +38,7 @@
 
 - [GitHub Stats Card](#github-stats-card)
 - [GitHub Extra Pins](#github-extra-pins)
+- [Top Languages Card](#top-languages-card)
 - [Themes](#themes)
 - [Customization](#customization)
 - [Deploy Yourself](#deploy-on-your-own-vercel-instance)
@@ -53,12 +57,24 @@ _Note: Ranks are calculated based on user's stats, see [src/calculateRank.js](./
 
 ### Hiding individual stats
 
-To hide any specific stats, you can pass a query parameter `?hide=` with an array of items you wanna hide.
+To hide any specific stats, you can pass a query parameter `?hide=` with comma seperated values.
 
-> Options: `&hide=["stars","commits","prs","issues","contribs"]`
+> Options: `&hide=stars,commits,prs,issues,contribs`
 
 ```md
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=["contribs","prs"])
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=contribs,prs])
+```
+
+### Adding private contributions count to total commits count
+
+You can add the count of all your private contributions to the total commits count by using the query parameter `?count_private=true`.
+
+_Note: If you are deploying this project yourself, the private contributions will be counted by default otherwise you need to chose to share your private contribution counts._
+
+> Options: `&count_private=true`
+
+```md
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&count_private=true)
 ```
 
 ### Showing icons
@@ -93,54 +109,24 @@ You can customize the appearance of your `Stats Card` or `Repo Card` however you
 
 Customization Options:
 
-| Option        | type      | description                          | Stats Card (default) | Repo Card (default) |
-| ------------- | --------- | ------------------------------------ | -------------------- | ------------------- |
-| title_color   | hex color | title color                          | 2f80ed               | 2f80ed              |
-| text_color    | hex color | body color                           | 333                  | 333                 |
-| icon_color    | hex color | icon color                           | 4c71f2               | 586069              |
-| bg_color      | hex color | card bg color                        | FFFEFE               | FFFEFE              |
-| line_height   | number    | control the line-height between text | 30                   | N/A                 |
-| hide_rank     | boolean   | hides the ranking                    | false                | N/A                 |
-| hide_title    | boolean   | hides the stats title                | false                | N/A                 |
-| hide_border   | boolean   | hides the stats card border          | false                | N/A                 |
-| show_owner    | boolean   | shows owner name in repo card        | N/A                  | false               |
-| show_icons    | boolean   | shows icons                          | false                | N/A                 |
-| theme         | string    | sets inbuilt theme                   | 'default'            | 'default_repocard'  |
-| cache_seconds | number    | manually set custom cache control    | 1800                 | 1800                |
+| Option        | type      | description                                 | Stats Card (default) | Repo Card (default) | Top Lang Card (default) |
+| ------------- | --------- | ------------------------------------------- | -------------------- | ------------------- | ----------------------- |
+| title_color   | hex color | title color                                 | 2f80ed               | 2f80ed              | 2f80ed                  |
+| text_color    | hex color | body color                                  | 333                  | 333                 | 333                     |
+| icon_color    | hex color | icon color                                  | 4c71f2               | 586069              | 586069                  |
+| bg_color      | hex color | card bg color                               | FFFEFE               | FFFEFE              | FFFEFE                  |
+| line_height   | number    | control the line-height between text        | 30                   | N/A                 | N/A                     |
+| hide          | CSV       | hides the items specified                   | undefined            | N/A                 | undefined               |
+| hide_rank     | boolean   | hides the ranking                           | false                | N/A                 | N/A                     |
+| hide_title    | boolean   | hides the stats title                       | false                | N/A                 | false                   |
+| hide_border   | boolean   | hides the stats card border                 | false                | N/A                 | N/A                     |
+| show_owner    | boolean   | shows owner name in repo card               | N/A                  | false               | N/A                     |
+| show_icons    | boolean   | shows icons                                 | false                | N/A                 | N/A                     |
+| theme         | string    | sets inbuilt theme                          | 'default'            | 'default_repocard'  | 'default                |
+| cache_seconds | number    | manually set custom cache control           | 1800                 | 1800                | '1800'                  |
+| count_private | boolean   | counts private contributions too if enabled | false                | N/A                 | N/A                     |
 
 > Note on cache: Repo cards have default cache of 30mins (1800 seconds) if the fork count & star count is less than 1k otherwise it's 2hours (7200). Also note that cache is clamped to minimum of 30min and maximum of 24hours
-
----
-
-### Demo
-
-- Default
-
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra)
-
-- Hiding specific stats
-
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=["contribs","issues"])
-
-- Showing icons
-
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=["issues"]&show_icons=true)
-
-- Themes
-
-Choose from any of the [default themes](#themes)
-
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&show_icons=true&theme=radical)
-
-- Customizing stats card
-
-![Anurag's github stats](https://github-readme-stats.vercel.app/api/?username=anuraghazra&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
-
-- Customizing repo card
-
-![Customized Card](https://github-readme-stats.vercel.app/api/pin?username=anuraghazra&repo=github-readme-stats&title_color=fff&icon_color=f9f9f9&text_color=9f9f9f&bg_color=151515)
-
----
 
 # GitHub Extra Pins
 
@@ -165,6 +151,70 @@ Endpoint: `api/pin?username=anuraghazra&repo=github-readme-stats`
 Use [show_owner](#customization) variable to include the repo's owner username
 
 [![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=anuraghazra&repo=github-readme-stats&show_owner=true)](https://github.com/anuraghazra/github-readme-stats)
+
+# Top Languages Card
+
+Top languages card shows github user's top langauges which has been mostly used.
+
+_NOTE: Top languages does not indicate my skill level or something like that, it's a github metric of which languages i have the most code on github, it's a new feature of github-readme-stats_
+
+### Usage
+
+Copy-paste this code into your readme and change the links.
+
+Endpoint: `api/top-langs?username=anuraghazra`
+
+```md
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
+```
+
+### Hide individual languages
+
+You can use `?hide=language1,language2` parameter to hide individual languages.
+
+```md
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra&hide=javascript,html)](https://github.com/anuraghazra/github-readme-stats)
+```
+
+### Demo
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
+
+---
+
+### All Demos
+
+- Default
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra)
+
+- Hiding specific stats
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=contribs,issues])
+
+- Showing icons
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&hide=issues&show_icons=true)
+
+- Themes
+
+Choose from any of the [default themes](#themes)
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=anuraghazra&show_icons=true&theme=radical)
+
+- Customizing stats card
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api/?username=anuraghazra&show_icons=true&title_color=fff&icon_color=79ff97&text_color=9f9f9f&bg_color=151515)
+
+- Customizing repo card
+
+![Customized Card](https://github-readme-stats.vercel.app/api/pin?username=anuraghazra&repo=github-readme-stats&title_color=fff&icon_color=f9f9f9&text_color=9f9f9f&bg_color=151515)
+
+- Top languages
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=anuraghazra)](https://github.com/anuraghazra/github-readme-stats)
+
+---
 
 ### Quick Tip (Align The Repo Cards)
 
@@ -203,8 +253,9 @@ NOTE: Since [#58](https://github.com/anuraghazra/github-readme-stats/pull/58) we
 1. Select `Import Git Repository`  
    ![](https://files.catbox.moe/pqub9q.png)
 1. Select root and keep everything as is, just add your environment variable named PAT_1 (as shown), which will contain a personal access token (PAT), which you can easily create [here](https://github.com/settings/tokens/new) (leave everything as is, just name it something, it can be anything you want)
-   ![](https://files.catbox.moe/caem5b.png)
+   ![](https://files.catbox.moe/0ez4g7.png)
 1. Click deploy, and you're good to go. See your domains to use the API!
+
 </details>
 
 ## :sparkling_heart: Support the project
